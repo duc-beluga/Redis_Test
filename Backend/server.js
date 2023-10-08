@@ -1,6 +1,7 @@
 import express from 'express'
 import fetch from 'node-fetch'
 import redis from 'redis'
+import rateLimit from 'express-rate-limit'
 
 const PORT = process.env.PORT || 5000
 const REDIS_PORT = process.env.PORT || 6379
@@ -9,6 +10,12 @@ const client = redis.createClient(REDIS_PORT)
 await client.connect()
 
 const app = express()
+
+const limiter = rateLimit({
+  max: 5,
+  windowMs: 10000,
+  message: "You can't make any more requests at the moment. Try again later"
+})
 
 function setResponse(username, repos) {
     return `<h2>${username} has ${repos} Github Repos`
@@ -49,7 +56,7 @@ async function cache(req, res, next) {
     }
   }
 
-app.get('/repos/:username', cache, getRepos);
+app.get('/repos/:username', limiter, cache, getRepos);
 
 app.listen(5000, () => {
     console.log(`App is listening on ${PORT}`);
