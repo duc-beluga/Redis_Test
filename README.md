@@ -30,8 +30,10 @@ Simple Redis Test on Cache Time
 ``redis-server``
 
 11. Start Interacting with Redis server (On a different Linux Terminal):
+    
 ``redis-cli``
-12. Common commands - Output:
+
+13. Common commands - Output:
     
 ``SET myKey "Hello"``  		``Ok``
 
