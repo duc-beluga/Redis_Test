@@ -49,15 +49,20 @@ Simple Redis Test on Cache Time
 
 Common Bugs:
 
-redis-server: Could not create server TCP listening socket *:6379: bind: Address already in use
+### redis-server: Could not create server TCP listening socket *:6379: bind: Address already in use
 
 Check which application is using port 6379: ``lsof -i :6379``
-
 
 Try: 
 
 ``redis-cli`` -> ``shutdown``
 
 ``sudo /etc/init.d/redis-server stop``
+
+### Can't handle RDB format version... 
+
+delete ``dump.rdb`` file in working directory
+
+
 
 
